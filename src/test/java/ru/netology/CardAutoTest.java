@@ -20,19 +20,23 @@ public class CardAutoTest {
 
     @AfterAll
     static void setUpAll() {
-        System.setProperty("driver.chrome.driver", "./driver/chromedriver_win/chromedriver.exe");
+        System.setProperty("WebDriver.chrome.driver", "./driver/chromedriver_win/chromedriver.exe");
     }
+
     @BeforeEach
     void setUp() {
+
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
     }
+
     @AfterEach
     void tearDown() {
         driver.quit();
         driver = null;
     }
+
     @Test
     void shouldTestSomething() {
         driver.get("http://localhost:9999/");
@@ -42,7 +46,7 @@ public class CardAutoTest {
         driver.findElement(By.className("Checkbox")).click();
         driver.findElement(By.tagName("button")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual = driver.findElement(By.className("paragraph paragraph_theme_alfa-on-white")).getText();
+        String actual = driver.findElement(By.className("paragraph paragraph_theme_alfa-on-white")).getText().trim();
         assertEquals(expected, actual);
     }
 }
