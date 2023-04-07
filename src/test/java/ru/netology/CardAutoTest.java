@@ -25,7 +25,7 @@ public class CardAutoTest {
     @BeforeEach
     void setUp() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*")
+        options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver();
     }
     @AfterEach
