@@ -9,13 +9,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import javax.swing.*;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 
 public class CardAutoTest {
-    private WebDriver driver;
+    WebDriver driver;
 
     @AfterAll
     static void setUpAll() {
-        System.setProperty("WebDriver.chrome.driver", "./driver/chromedriver_win/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
+      //  System.setProperty("WebDriver.chrome.driver", "./driver/chromedriver_win/chromedriver.exe");
     }
 
     @BeforeEach
@@ -41,7 +44,7 @@ public class CardAutoTest {
         driver.findElement(By.className("checkbox__box")).click();
         driver.findElement(By.tagName("button")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual = driver.findElement(By.className("order-success")).getText().trim();
+        String actual = driver.findElement(By.className("Success_successBlock__2L3Cw")).getText().trim();
         assertEquals(expected, actual);
     }
 }
