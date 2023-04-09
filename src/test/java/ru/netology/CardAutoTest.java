@@ -23,8 +23,10 @@ public class CardAutoTest {
 
     @BeforeEach
     void setUp() {
-
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
         options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
     }
@@ -38,13 +40,12 @@ public class CardAutoTest {
     @Test
     void shouldTestSomething() {
         driver.get("http://localhost:9999/");
-        List<WebElement> inputs = driver.findElements(By.tagName("input"));
-        inputs.get(0).sendKeys("Сидоров Иван");
-        inputs.get(1).sendKeys("+79856239080");
-        driver.findElement(By.className("checkbox__box")).click();
+        driver.findElement(By.cssSelector("[data-test-id=name] input")).sendKeys("Сидоров Иван");
+        driver.findElement(By.cssSelector("[data-test-id=phone] input")).sendKeys("+79856239080");
+        driver.findElement(By.cssSelector("[data-test-id=agreement")).click();
         driver.findElement(By.tagName("button")).click();
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время.";
-        String actual = driver.findElement(By.className("Success_successBlock__2L3Cw")).getText().trim();
+        String actual = driver.findElement(By.cssSelector("[data-test-id=order-success")).getText().trim();
         assertEquals(expected, actual);
     }
 }
